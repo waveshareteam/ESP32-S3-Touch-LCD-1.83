@@ -1,0 +1,11 @@
+**/.git/
+
+**/.gitmodules
+**/.gitignore
+**/.gitattributes
+**/.gitkeep
+
+**/.gitindex
+**/.gitlog
+**/.git-*
+**/.idea
