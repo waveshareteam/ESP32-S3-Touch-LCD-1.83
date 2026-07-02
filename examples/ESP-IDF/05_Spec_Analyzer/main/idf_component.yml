@@ -1,5 +1,7 @@
 ## IDF Component Manager Manifest File
 dependencies:
+  espressif/usb:
+    version: "^1.4.1"
   lvgl/lvgl:
     version: "^9.2.0"
     public: true

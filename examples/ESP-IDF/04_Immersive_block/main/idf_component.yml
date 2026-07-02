@@ -1,9 +1,11 @@
 ## IDF Component Manager Manifest File
 dependencies:
+  espressif/usb:
+    version: "^1.4.1"
   ## Required IDF version
   idf: ">=5.5.0"
 
-  waveshare/qmi8658: 
+  waveshare/qmi8658:
     version: "*"
   waveshare/esp32_s3_touch_lcd_1_83: "*"
   lvgl/lvgl:

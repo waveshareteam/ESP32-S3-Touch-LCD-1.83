@@ -1,5 +1,7 @@
 ## IDF Component Manager Manifest File
 dependencies:
+  espressif/usb:
+    version: "^1.4.1"
   ## Required IDF version
   idf: ">=5.1.0"
   espressif/esp_lvgl_port:

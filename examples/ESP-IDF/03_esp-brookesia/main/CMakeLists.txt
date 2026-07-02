@@ -38,3 +38,18 @@ spiffs_create_partition_image(
     FLASH_IN_PROJECT
     SPIFFS_IMAGE_FLAGS="-b 4096 -p 256 -s 0x100000 -q"
 )
+idf_build_get_property(build_components BUILD_COMPONENTS)
+if("lvgl__lvgl" IN_LIST build_components)
+    idf_component_get_property(LVGL_LIB lvgl__lvgl COMPONENT_LIB)
+    if(TARGET ${LVGL_LIB})
+        target_compile_options(${LVGL_LIB} PRIVATE -Wno-error=attributes -Wno-error=cpp)
+    endif()
+endif()
+idf_build_get_property(build_components BUILD_COMPONENTS)
+if("chmorgan__esp-audio-player" IN_LIST build_components AND "esp_driver_i2s" IN_LIST build_components)
+    idf_component_get_property(AUDIO_PLAYER_LIB chmorgan__esp-audio-player COMPONENT_LIB)
+    if(TARGET ${AUDIO_PLAYER_LIB})
+        target_link_libraries(${AUDIO_PLAYER_LIB} PUBLIC idf::esp_driver_i2s)
+    endif()
+endif()
+
