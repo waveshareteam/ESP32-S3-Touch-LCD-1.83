@@ -9,3 +9,11 @@
 **/.gitlog
 **/.git-*
 **/.idea
+# ESP-IDF generated files
+**/build/
+**/managed_components/
+
+# Release package output
+releases/dist/
+release-artifacts/
+releases/downloads/
