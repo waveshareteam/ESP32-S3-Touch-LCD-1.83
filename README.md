@@ -1,49 +1,52 @@
-# Waveshare ESP32-S3-Touch-LCD-1.83 Product Engineering Sample Program
+# Waveshare ESP32-S3-Touch-LCD-1.83
 
-ESP32-S3-Touch-LCD-1.83 is a high-performance and highly integrated microcontroller development board designed by Waveshare. With a compact board size, it is equipped with a 1.83-inch capacitive LCD screen, a highly integrated power management chip, six-axis sensors (three-axis accelerometer and three-axis gyroscope), RTC and low-power audio codec chip, etc., making it convenient for development and easy to be embedded in products.
+ESP32-S3-Touch-LCD-1.83 is a compact Waveshare development board with an ESP32-S3 MCU, 1.83-inch capacitive LCD, power management, six-axis motion sensor, RTC, and low-power audio codec.
 
----
+## Repository Layout
 
-## 🔧 Configuration
+- `examples/esp-idf/`: first-party ESP-IDF projects.
+- `examples/arduino/`: first-party Arduino sketches and bundled libraries.
+- `config/`: shared configuration overlays.
+- `docs/`: maintainer notes for structure, CI, components, firmware, and Brookesia.
+- `firmware/`: released factory binary artifacts, excluded from build CI.
+- `releases/`: scripts for packaging CI and local build outputs into flashable firmware archives.
+- `schematic/`: hardware schematic files.
+- `videos/`: media assets for video playback examples.
 
-You can find detailed configuration information on the product wiki page
+## ESP-IDF Examples
 
----
+Build ESP-IDF examples with target `esp32s3`:
 
-## 🛠️ Contributing
+```bash
+idf.py -C examples/esp-idf/02_lvgl_demo_v9 set-target esp32s3 build
+```
 
-We welcome contributions! Here’s how you can help:
+CI covers first-party ESP-IDF examples with ESP-IDF `v5.5.4` and `v6.0.2`.
 
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Commit your changes with clear descriptions.
-4. Submit a pull request for review.
+## Arduino Examples
 
----
+First-party sketches live directly under `examples/arduino/`. Bundled libraries live under `examples/arduino/libraries/` and are used by the sketches.
 
-## 🧩 Issues and Support
+```bash
+arduino-cli compile --fqbn esp32:esp32:esp32s3 --libraries examples/arduino/libraries examples/arduino/01_HelloWorld
+```
 
-If you encounter any issues:
+CI compiles first-party sketches with Arduino-ESP32 core `3.3.10`. Examples inside bundled libraries are intentionally excluded from product CI.
 
-- Check the [Issues](https://github.com/waveshareteam/ESP32-S3-Touch-LCD-1.83/issues) section.
-- Create a new issue with detailed information.
-- Refer to the documentation for troubleshooting tips.
-- Contact the Waveshare team and provide the order number to obtain technical support.
+## Documentation
 
----
+- [Repository structure](docs/repository-structure.md)
+- [CI](docs/ci.md)
+- [Components](docs/components.md)
+- [Firmware artifacts](docs/firmware.md)
+- [ESP-Brookesia notes](docs/brookesia.md)
 
-## 📜 License
+For product setup details, refer to the Waveshare product wiki.
 
-This repository is licensed under the Apache License License. See the `LICENSE` file for details.
+## Support
 
----
+Use GitHub issues for repository problems. Include the example path, framework version, and build or runtime logs. For product support, contact Waveshare support channels and provide the order number when needed.
 
-## 🙌 Acknowledgments
+## License
 
-- Waveshare for their excellent hardware platforms and software support
-- The Espressif Team for their continuous support.
-- Open-source contributors who make these projects possible.
-
----
-
-Thank you for using Waveshare Electronics Products! 🚀
+This repository is licensed under the Apache License. See `LICENSE.txt` for details.
