@@ -1,5 +1,5 @@
-# Shared Configuration
+# Shared configuration
 
-This directory is reserved for shared ESP-IDF configuration overlays and CI-facing defaults that apply across examples.
+[简体中文](README_ZH.md)
 
-Project-specific settings remain in each example directory. Add shared overlays here only when more than one first-party example needs the same setting.
+This directory contains repository CI policy and may contain shared ESP-IDF overlays. Project-specific settings stay with their example. `ci-routing.json` controls narrow routing extensions; `markdown-audit.json` records first-party bilingual pairs and homepage checks.

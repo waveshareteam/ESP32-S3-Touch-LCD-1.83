@@ -1,9 +1,9 @@
-# Firmware Artifacts
+# Firmware artifacts
 
-`firmware/` contains factory binary artifacts for user flashing and recovery flows. These binaries are not source projects and are not built by CI.
+[简体中文](firmware_ZH.md)
 
-Source-maintained firmware should live under `examples/esp-idf/` or another documented source directory with its own `CMakeLists.txt`, manifest, and validation path.
+[`firmware/`](../firmware/) contains the published factory image for flashing and recovery. It is immutable delivery material: routine documentation and CI work must not rebuild, repackage, rename, or modify it.
 
-CI build outputs are packaged by `releases/package_firmware.py` and uploaded as workflow artifacts. The generated zip contains `manifest.json`, flash helper scripts, and the binaries needed by esptool.
+The example workflow builds only first-party projects under `examples/` and may package source-built diagnostic artifacts. Those artifacts are not factory firmware and do not validate or replace it. Source and build instructions for other firmware surfaces are not included here and may be added in a later update.
 
-For local release packaging, build the target project first and run the Python script from the repository root. Generated archives are written under `releases/dist/` by default.
+The [release helpers](../releases/README.md) create per-example archives from build outputs and can download artifacts from a selected GitHub Actions run. They write only to their configured output directories and never update the checked-in factory image.
