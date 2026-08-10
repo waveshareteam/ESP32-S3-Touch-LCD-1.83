@@ -5,6 +5,7 @@
 - `examples/esp-idf/`: six first-party ESP-IDF projects.
 - `examples/arduino/`: nine first-party Arduino sketches and their bundled libraries.
 - `config/`: CI policy and shared configuration documentation.
+- `assets/images/`: official product visual assets used by the homepage.
 - `docs/`: first-party maintenance documentation.
 - `firmware/`: published factory binary, outside default example CI.
 - `releases/`: helper scripts for source-built example artifacts.

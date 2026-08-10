@@ -7,7 +7,7 @@
     <a href="LICENSE.txt"><img alt="License" src="https://img.shields.io/github/license/waveshareteam/ESP32-S3-Touch-LCD-1.83"></a>
   </p>
   <p><a href="README.md">English</a></p>
-  <p><img src="https://docs.waveshare.com/assets/images/ESP32-S3-Touch-LCD-1.83_screen-3a5382853a874f7ff3b20e8f89ad8143.webp" alt="ESP32-S3-Touch-LCD-1.83 显示屏与开发板" width="520"></p>
+  <p><img src="assets/images/ESP32-S3-Touch-LCD-1.83.jpg" alt="ESP32-S3-Touch-LCD-1.83 带外壳和显示屏的开发板" width="520"></p>
   <p>
     <a href="https://www.waveshare.com/product/esp32-s3-touch-lcd-1.83.htm">🌐 产品页</a> |
     <a href="https://docs.waveshare.com/ESP32-S3-Touch-LCD-1.83">📚 产品文档</a> |
@@ -106,7 +106,7 @@ CI 使用 ESP-IDF `v5.5.5` 与 `v6.0.2` 构建全部 6 个 ESP-IDF 工程，并�
 - [发布辅助工具](releases/README_ZH.md)
 - [贡献指南](CONTRIBUTING_ZH.md)
 - [支持](SUPPORT_ZH.md)
-- [安全策略（英文）](SECURITY.md)
+- [安全策略](SECURITY_ZH.md)
 - [提交 Issue](https://github.com/waveshareteam/ESP32-S3-Touch-LCD-1.83/issues/new/choose)
 
 ## 📄 许可证

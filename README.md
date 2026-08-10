@@ -7,7 +7,7 @@
     <a href="LICENSE.txt"><img alt="License" src="https://img.shields.io/github/license/waveshareteam/ESP32-S3-Touch-LCD-1.83"></a>
   </p>
   <p><a href="README_ZH.md">简体中文</a></p>
-  <p><img src="https://docs.waveshare.com/assets/images/ESP32-S3-Touch-LCD-1.83_screen-3a5382853a874f7ff3b20e8f89ad8143.webp" alt="ESP32-S3-Touch-LCD-1.83 display and board" width="520"></p>
+  <p><img src="assets/images/ESP32-S3-Touch-LCD-1.83.jpg" alt="ESP32-S3-Touch-LCD-1.83 development board with enclosure and display" width="520"></p>
   <p>
     <a href="https://www.waveshare.com/product/esp32-s3-touch-lcd-1.83.htm">🌐 Product</a> |
     <a href="https://docs.waveshare.com/ESP32-S3-Touch-LCD-1.83">📚 Documentation</a> |

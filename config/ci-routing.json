@@ -4,7 +4,11 @@
     ".github/ISSUE_TEMPLATE/**",
     ".github/pull_request_template.md"
   ],
-  "documentation_asset_patterns": [],
+  "documentation_asset_patterns": [
+    "assets/images/ESP32-S3-Touch-LCD-1.83.jpg",
+    "assets/images/README.md",
+    "assets/images/README_ZH.md"
+  ],
   "ignore_build_patterns": [
     ".gitignore",
     "assets/**",

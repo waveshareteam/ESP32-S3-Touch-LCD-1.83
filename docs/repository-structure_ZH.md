@@ -5,6 +5,7 @@
 - `examples/esp-idf/`：6 个第一方 ESP-IDF 工程。
 - `examples/arduino/`：9 个第一方 Arduino 草图及其捆绑库。
 - `config/`：CI 策略和共享配置说明。
+- `assets/images/`：首页使用的官方产品视觉资产。
 - `docs/`：第一方维护文档。
 - `firmware/`：已发布出厂二进制，不进入默认示例 CI。
 - `releases/`：源码构建示例工件的辅助脚本。

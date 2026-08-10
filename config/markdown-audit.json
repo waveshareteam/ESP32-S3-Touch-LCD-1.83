@@ -7,7 +7,11 @@
   ],
   "language_link_exempt_patterns": [],
   "relative_link_ignore_patterns": [],
-  "docs_only_allowed_patterns": [],
+  "docs_only_allowed_patterns": [
+    "assets/images/ESP32-S3-Touch-LCD-1.83.jpg",
+    "assets/images/README.md",
+    "assets/images/README_ZH.md"
+  ],
   "sensitive_allow_regexes": [],
   "bilingual_pairs": [
     {"english": "README.md", "chinese": "README_ZH.md"},
@@ -20,7 +24,11 @@
     {"english": "releases/README.md", "chinese": "releases/README_ZH.md"},
     {"english": "firmware/README.md", "chinese": "firmware/README_ZH.md"},
     {"english": "CONTRIBUTING.md", "chinese": "CONTRIBUTING_ZH.md"},
-    {"english": "SUPPORT.md", "chinese": "SUPPORT_ZH.md"}
+    {"english": "SUPPORT.md", "chinese": "SUPPORT_ZH.md"},
+    {"english": "SECURITY.md", "chinese": "SECURITY_ZH.md"},
+    {"english": "examples/esp-idf/01_AXP2101/README.md", "chinese": "examples/esp-idf/01_AXP2101/README_ZH.md"},
+    {"english": "examples/esp-idf/04_Immersive_block/README.md", "chinese": "examples/esp-idf/04_Immersive_block/README_ZH.md"},
+    {"english": "assets/images/README.md", "chinese": "assets/images/README_ZH.md"}
   ],
   "bilingual_directory_mappings": [],
   "homepage_h3_emoji_allow_patterns": [],
