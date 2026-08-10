@@ -310,7 +310,7 @@ def route_changes(
     if all_idf:
         selected_idf = set(idf_projects)
     if all_arduino:
-        selected_arduino = set(arduino_sketches)
+        selected_arduino = set(arduino_roots.values())
 
     def framework_report(all_selected: bool, selected: set[str], available: list[str]) -> dict:
         if all_selected:

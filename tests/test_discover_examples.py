@@ -77,6 +77,26 @@ class DiscoverExamplesTests(unittest.TestCase):
         self.assertEqual(2, len(idf["include"]))
         self.assertEqual(1, len(arduino["include"]))
 
+    def test_global_workflow_route_selects_all_arduino_sketch_roots(self) -> None:
+        data = route(".github/workflows/examples.yml")
+        self.assertEqual("all", data["arduino"]["mode"])
+        self.assertEqual(9, len(data["arduino"]["selected"]))
+        self.assertEqual(
+            len(data["arduino"]["selected"]),
+            len(set(data["arduino"]["selected"])),
+        )
+        arduino = run(
+            "--surface",
+            "arduino",
+            "--selector",
+            "all",
+            "--arduino-core",
+            "3.3.11",
+            "--selected-paths",
+            json.dumps(data["arduino"]["selected"]),
+        )
+        self.assertEqual(9, len(arduino["include"]))
+
     def test_policy_only_changes_use_the_lightweight_gate(self) -> None:
         data = route(
             ".gitignore",
