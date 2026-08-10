@@ -1,13 +1,17 @@
-# Release Scripts
+# Release helpers
 
-This directory contains helper scripts for packaging build outputs into flashable firmware archives.
+[简体中文](README_ZH.md)
 
-## ESP-IDF
+This directory contains helpers for packaging source-built example outputs and downloading CI artifacts. Generated archives are diagnostics for examples; they are not factory firmware and must not be committed as product delivery files.
 
-Build an example first, then package the generated build directory:
+## ESP-IDF packaging
+
+After building an example, package its build directory:
 
 ```bash
-idf.py -C examples/esp-idf/02_lvgl_demo_v9 -B build/02_lvgl_demo_v9-v6.0.2 set-target esp32s3 build
+idf.py -C examples/esp-idf/02_lvgl_demo_v9 \
+  -B build/02_lvgl_demo_v9-v6.0.2 set-target esp32s3 build
+
 python3 releases/package_firmware.py \
   --framework esp-idf \
   --project examples/esp-idf/02_lvgl_demo_v9 \
@@ -16,44 +20,44 @@ python3 releases/package_firmware.py \
   --target esp32s3
 ```
 
-The script reads ESP-IDF's `flasher_args.json`, copies the required binary files, writes flash helper scripts, and creates a zip under `releases/dist/`.
+The helper reads ESP-IDF's `flasher_args.json`, copies the required binaries, writes flash helpers, and creates an archive below `releases/dist/`.
 
-## Arduino
+## Arduino packaging
 
-Export binaries into a stable output directory, then package them:
+Export an Arduino sketch into a stable output directory, then package it:
 
 ```bash
 arduino-cli compile \
   --fqbn esp32:esp32:esp32s3 \
   --libraries examples/arduino/libraries \
   --export-binaries \
-  --output-dir build/01_HelloWorld-3.3.10 \
+  --output-dir build/01_HelloWorld-3.3.11 \
   examples/arduino/01_HelloWorld
 
 python3 releases/package_firmware.py \
   --framework arduino \
   --project examples/arduino/01_HelloWorld \
-  --build-dir build/01_HelloWorld-3.3.10 \
-  --framework-version 3.3.10 \
+  --build-dir build/01_HelloWorld-3.3.11 \
+  --framework-version 3.3.11 \
   --target esp32s3
 ```
 
-Each archive includes `manifest.json`, `flash.sh`, `flash.bat`, `flash_args.txt`, and the firmware binaries under `bin/`.
+Each archive contains `manifest.json`, `flash.sh`, `flash.bat`, `flash_args.txt`, and the required binaries below `bin/`.
 
-## Download CI Artifacts
+## Downloading CI artifacts
 
-After a CI run completes, download and extract firmware artifacts with:
+Download and extract one completed workflow run:
 
 ```bash
 python3 releases/download_artifacts.py --run-id <run-id> --clean
 ```
 
-If `--run-id` is omitted, the script finds the latest successful `examples.yml` run for the current branch:
+Without `--run-id`, the helper finds the latest successful `examples.yml` run for the current branch:
 
 ```bash
 python3 releases/download_artifacts.py --clean
 ```
 
-The extracted firmware is written to `releases/downloads/run-<run-id>/`. Each artifact gets its own folder, for example `firmware-esp-idf-02_lvgl_demo_v9-v6.0.2/`, with `flash.sh`, `flash.bat`, `manifest.json`, and `bin/` ready for flashing.
+Use `--artifact <name>` for one artifact or `--pattern "firmware-esp-idf-*v6.0.2"` for a glob selection. The helper uses `GH_TOKEN`, `GITHUB_TOKEN`, or `gh auth token`. Extracted files are written below `releases/downloads/run-<run-id>/`, which is ignored by Git.
 
-Use `--artifact <name>` to download one firmware package, or `--pattern "firmware-esp-idf-*v6.0.2"` to filter by glob pattern. The script uses `GH_TOKEN`, `GITHUB_TOKEN`, or `gh auth token` for GitHub artifact access. When GitHub CLI is installed, artifact downloads use `gh run download` so `gh auth login` can be reused directly.
+The checked-in image in [`firmware/`](../firmware/) is a separate immutable delivery surface. These helpers never rebuild or replace it.

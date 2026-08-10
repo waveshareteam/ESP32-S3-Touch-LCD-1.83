@@ -58,12 +58,32 @@ def discover_arduino(repo: Path) -> list[dict[str, str]]:
 def build_matrix(args: argparse.Namespace) -> dict[str, list[dict[str, str]]]:
     repo = Path(args.repo).resolve()
     selector = normalize(args.selector)
+    routed_paths: set[str] | None = None
+    if args.selected_paths is not None:
+        selected = json.loads(args.selected_paths)
+        if not isinstance(selected, list) or not all(isinstance(path, str) for path in selected):
+            raise ValueError("--selected-paths must be a JSON list of repo-relative paths")
+        routed_paths = {normalize(path) for path in selected}
+    if args.routing_report:
+        report = json.loads(Path(args.routing_report).read_text(encoding="utf-8"))
+        key = "esp_idf" if args.surface == "esp-idf" else "arduino"
+        route = report[key]
+        if route["mode"] == "none":
+            routed_paths = set()
+        elif route["mode"] == "selected":
+            routed_paths = {normalize(path) for path in route["selected"]}
+        elif route["mode"] != "all":
+            raise ValueError(f"unsupported routing mode for {key}: {route['mode']}")
     if args.surface == "esp-idf":
         projects = [entry for entry in discover_esp_idf(repo) if selector_matches(entry, selector)]
+        if routed_paths is not None:
+            projects = [entry for entry in projects if normalize(entry["path"]) in routed_paths]
         versions = [item.strip() for item in args.idf_versions.split(",") if item.strip()]
         include = [entry | {"idf": version} for entry in projects for version in versions]
     else:
         sketches = [entry for entry in discover_arduino(repo) if selector_matches(entry, selector)]
+        if routed_paths is not None:
+            sketches = [entry for entry in sketches if normalize(entry["path"]) in routed_paths]
         include = [entry | {"core": args.arduino_core, "fqbn": args.fqbn} for entry in sketches]
     return {"include": include}
 
@@ -73,9 +93,11 @@ def main() -> None:
     parser.add_argument("--repo", default=".")
     parser.add_argument("--surface", choices=("esp-idf", "arduino"), required=True)
     parser.add_argument("--selector", default="all")
-    parser.add_argument("--idf-versions", default="v5.5.4,v6.0.2")
-    parser.add_argument("--arduino-core", default="3.3.10")
+    parser.add_argument("--idf-versions", default="v5.5.5,v6.0.2")
+    parser.add_argument("--arduino-core", default="3.3.11")
     parser.add_argument("--fqbn", default="esp32:esp32:esp32s3")
+    parser.add_argument("--routing-report", help="JSON report emitted by audit_ci_routing.py")
+    parser.add_argument("--selected-paths", help="JSON list of paths selected by CI routing")
     parser.add_argument("--github-output")
     args = parser.parse_args()
 

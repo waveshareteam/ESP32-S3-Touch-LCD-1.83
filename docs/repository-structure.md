@@ -1,14 +1,16 @@
-# Repository Structure
+# Repository structure
 
-This repository uses the Waveshare ESP32 product layout:
+[简体中文](repository-structure_ZH.md)
 
-- `examples/esp-idf/`: first-party ESP-IDF projects for the ESP32-S3 Touch LCD 1.83 board.
-- `examples/arduino/`: first-party Arduino sketches plus bundled libraries required by those sketches.
-- `config/`: shared configuration overlays used by more than one example.
-- `docs/`: maintainer notes for CI, components, firmware, and compatibility.
-- `firmware/`: factory binary artifacts that are documented but not built in CI.
-- `releases/`: scripts for packaging build outputs into flashable firmware archives.
-- `schematic/`: public schematic files.
-- `videos/`: media assets used by video playback examples.
+- `examples/esp-idf/`: six first-party ESP-IDF projects.
+- `examples/arduino/`: nine first-party Arduino sketches and their bundled libraries.
+- `config/`: CI policy and shared configuration documentation.
+- `assets/images/`: official product visual assets used by the homepage.
+- `docs/`: first-party maintenance documentation.
+- `firmware/`: published factory binary, outside default example CI.
+- `releases/`: helper scripts for source-built example artifacts.
+- `schematic/`: board schematic.
+- `tests/`: static tests for discovery, CI routing, Markdown policy, and release helpers.
+- `videos/`: product demonstration media referenced by the documentation.
 
-CI intentionally builds only first-party examples. Examples and tests inside bundled Arduino libraries remain available for library users, but they are not product CI targets.
+The normal example matrix does not build bundled-library examples or firmware projects/artifacts.

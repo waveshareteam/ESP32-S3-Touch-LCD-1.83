@@ -1,0 +1,35 @@
+{
+  "build_override_patterns": [],
+  "documentation_patterns": [
+    ".github/ISSUE_TEMPLATE/**",
+    ".github/pull_request_template.md"
+  ],
+  "documentation_asset_patterns": [
+    "assets/images/ESP32-S3-Touch-LCD-1.83.jpg",
+    "assets/images/README.md",
+    "assets/images/README_ZH.md"
+  ],
+  "ignore_build_patterns": [
+    ".gitignore",
+    "assets/**",
+    "tests/**",
+    "scripts/audit_ci_routing.py",
+    "scripts/audit_markdown.py",
+    "scripts/inventory_repo.py",
+    "config/ci-routing.json",
+    "config/markdown-audit.json",
+    "releases/download_artifacts.py",
+    "releases/download_artifacts_impl.py"
+  ],
+  "firmware_patterns": ["firmware/**"],
+  "esp_idf_shared_patterns": [],
+  "arduino_shared_patterns": [],
+  "esp_idf_global_patterns": [],
+  "arduino_global_patterns": [],
+  "global_build_patterns": [
+    ".github/workflows/**",
+    "scripts/discover_examples.py",
+    "config/**",
+    "releases/package_firmware.py"
+  ]
+}

@@ -1,5 +1,7 @@
 # AXP2101 PMU Example
 
+[简体中文](README_ZH.md)
+
 This example initializes the AXP2101 power-management IC over I2C and prints regulator, battery, VBUS, charger, and system-voltage status.
 
 The example uses a small local AXP2101 register driver in `main/port_axp2101.cpp` plus register definitions in `main/axp2101_registers.h`. It does not carry the full multi-chip XPowersLib copy.

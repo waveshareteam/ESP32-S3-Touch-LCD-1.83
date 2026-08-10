@@ -60,6 +60,43 @@ def copy_file(src: Path, firmware_dir: Path, offset: str | None = None) -> str:
     return f"bin/{dst_name}"
 
 
+def esp_idf_flash_source(build_dir: Path, raw_path: object) -> Path:
+    """Return a non-symlink ESP-IDF flash file contained by ``build_dir``."""
+    if not isinstance(raw_path, str) or not raw_path:
+        raise ValueError("ESP-IDF flash file path must be a non-empty string")
+
+    build_root = build_dir.resolve()
+    declared = Path(raw_path)
+    candidate = declared if declared.is_absolute() else build_root / declared
+    try:
+        relative = candidate.relative_to(build_root)
+    except ValueError as exc:
+        raise ValueError(
+            f"ESP-IDF flash file escapes build directory: {raw_path}"
+        ) from exc
+
+    component = build_root
+    for part in relative.parts:
+        if part in ("", "."):
+            continue
+        if part == "..":
+            component = component.parent
+            continue
+        component /= part
+        if component.is_symlink():
+            raise ValueError(
+                f"ESP-IDF flash file uses symbolic link component: {raw_path}"
+            )
+
+    try:
+        candidate.resolve().relative_to(build_root)
+    except ValueError as exc:
+        raise ValueError(
+            f"ESP-IDF flash file escapes build directory: {raw_path}"
+        ) from exc
+    return candidate
+
+
 def esp_idf_flash_entries(build_dir: Path, firmware_dir: Path) -> tuple[list[str], list[dict[str, str]], dict]:
     flasher_args_path = build_dir / "flasher_args.json"
     if not flasher_args_path.exists():
@@ -73,9 +110,7 @@ def esp_idf_flash_entries(build_dir: Path, firmware_dir: Path) -> tuple[list[str
     entries: list[dict[str, str]] = []
     command_pairs: list[str] = []
     for offset, rel_path in sorted(flash_files.items(), key=lambda item: parse_offset(item[0])):
-        src = Path(rel_path)
-        if not src.is_absolute():
-            src = build_dir / src
+        src = esp_idf_flash_source(build_dir, rel_path)
         copied = copy_file(src, firmware_dir, offset)
         rel_source = Path(rel_path)
         source_name = rel_source.name if rel_source.is_absolute() else rel_source.as_posix()

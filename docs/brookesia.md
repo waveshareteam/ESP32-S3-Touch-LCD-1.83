@@ -1,7 +1,7 @@
-# ESP-Brookesia Notes
+# ESP-Brookesia notes
 
-`examples/esp-idf/03_esp-brookesia` is a rich UI firmware example with LVGL, ESP-Brookesia, local app assets, SPIFFS music assets, and board audio glue.
+[简体中文](brookesia_ZH.md)
 
-Treat ESP-IDF v6 support as conditional on the current ESP-Brookesia and managed component releases. If a v6 build failure is rooted in upstream Brookesia compatibility, fix or pin the upstream component first instead of adding broad product-local workarounds.
+`examples/esp-idf/03_esp-brookesia` is a first-party rich-UI example with LVGL, ESP-Brookesia, local assets, and board audio glue. It remains in both ESP-IDF CI lines.
 
-Future TODO: when a verified v6-compatible Brookesia reference is available, synchronize the compatibility changes into this example and update the CI notes.
+If a future compatibility issue belongs to ESP-Brookesia or another managed dependency, resolve it with verified upstream compatibility evidence rather than adding broad product-local workarounds.

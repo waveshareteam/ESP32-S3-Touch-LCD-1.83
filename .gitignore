@@ -17,3 +17,7 @@
 releases/dist/
 release-artifacts/
 releases/downloads/
+
+# Python static-check artifacts
+**/__pycache__/
+*.py[cod]
