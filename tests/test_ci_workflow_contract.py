@@ -32,6 +32,13 @@ class ExamplesWorkflowContractTests(unittest.TestCase):
             self.workflow,
         )
 
+    def test_actions_use_supported_majors(self) -> None:
+        self.assertNotIn("actions/checkout@v4", self.workflow)
+        self.assertNotIn("actions/upload-artifact@v4", self.workflow)
+        self.assertEqual(5, self.workflow.count("actions/checkout@v7"))
+        self.assertEqual(2, self.workflow.count("actions/upload-artifact@v7"))
+        self.assertIn("arduino/setup-arduino-cli@v2", self.workflow)
+
 
 if __name__ == "__main__":
     unittest.main()
