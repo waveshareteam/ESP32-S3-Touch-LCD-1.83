@@ -4,4 +4,4 @@
 
 This directory contains released binary firmware for the ESP32-S3 Touch LCD 1.83 board. The image is for flashing and recovery, is not a source project, and is excluded from default example CI.
 
-It must remain byte-for-byte unchanged unless a maintainer explicitly authorizes a firmware release update. Source and build instructions for other firmware surfaces are not included here and may be added later.
+It must remain byte-for-byte unchanged unless a maintainer explicitly authorizes a firmware release update. An authorized update changes the image and `config/immutable-artifacts.sha256` together; ordinary pull requests fail the hash check. Source and build instructions for other firmware surfaces are not included here and may be added later.

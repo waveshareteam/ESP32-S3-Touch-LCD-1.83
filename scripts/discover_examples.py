@@ -8,6 +8,12 @@ import json
 from pathlib import Path
 
 
+ARDUINO_FQBN = (
+    "esp32:esp32:esp32s3:FlashMode=qio,FlashSize=16M,PSRAM=opi,"
+    "USBMode=hwcdc,PartitionScheme=default"
+)
+
+
 def normalize(value: str) -> str:
     return value.replace("\\", "/").strip("/")
 
@@ -95,7 +101,7 @@ def main() -> None:
     parser.add_argument("--selector", default="all")
     parser.add_argument("--idf-versions", default="v5.5.5,v6.0.2")
     parser.add_argument("--arduino-core", default="3.3.11")
-    parser.add_argument("--fqbn", default="esp32:esp32:esp32s3")
+    parser.add_argument("--fqbn", default=ARDUINO_FQBN)
     parser.add_argument("--routing-report", help="JSON report emitted by audit_ci_routing.py")
     parser.add_argument("--selected-paths", help="JSON list of paths selected by CI routing")
     parser.add_argument("--github-output")

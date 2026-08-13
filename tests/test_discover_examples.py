@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DISCOVER = ROOT / "scripts" / "discover_examples.py"
 ROUTING = ROOT / "scripts" / "audit_ci_routing.py"
+ARDUINO_FQBN = "esp32:esp32:esp32s3:FlashMode=qio,FlashSize=16M,PSRAM=opi,USBMode=hwcdc,PartitionScheme=default"
 
 
 def run(*args: str) -> dict:
@@ -59,6 +60,7 @@ class DiscoverExamplesTests(unittest.TestCase):
         arduino = run("--surface", "arduino", "--selector", "all", "--arduino-core", "3.3.11")
         self.assertEqual(12, len(idf["include"]))
         self.assertEqual(9, len(arduino["include"]))
+        self.assertTrue(all(item["fqbn"] == ARDUINO_FQBN for item in arduino["include"]))
         self.assertFalse(any("/libraries/" in item["path"] for item in arduino["include"]))
 
     def test_name_and_path_selectors(self) -> None:

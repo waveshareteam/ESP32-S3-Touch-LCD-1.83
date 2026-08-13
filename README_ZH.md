@@ -79,7 +79,7 @@ CI 源码构建工件仅用于所选示例的诊断，不能替代或验证出�
 
 ## 🛠️ 工具链与 CI
 
-CI 使用 ESP-IDF `v5.5.5` 与 `v6.0.2` 构建全部 6 个 ESP-IDF 工程，并使用 Arduino-ESP32 `3.3.11` 和 `esp32:esp32:esp32s3` 构建全部 9 个 Arduino 草图。
+CI 使用 ESP-IDF `v5.5.5` 与 `v6.0.2` 构建全部 6 个 ESP-IDF 工程，并使用 Arduino-ESP32 `3.3.11` 和 `esp32:esp32:esp32s3:FlashMode=qio,FlashSize=16M,PSRAM=opi,USBMode=hwcdc,PartitionScheme=default` 构建全部 9 个 Arduino 草图。这与 ESP32-S3R8 板级配置一致：16 MB Flash、八线 PSRAM、QIO Flash 模式和默认分区方案。
 
 每个拉取请求都会得到轻量范围与静态检查结果。仅文档改动不选择产品构建；直接修改示例只选择受影响工程或草图；共享构建输入选择相应完整矩阵。差异为空或不可用时会失败关闭。参阅 [CI 文档](docs/ci_ZH.md)。
 

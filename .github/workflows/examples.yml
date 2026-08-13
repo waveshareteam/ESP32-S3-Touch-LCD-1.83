@@ -23,6 +23,9 @@ jobs:
       selector: ${{ steps.select.outputs.selector }}
       idf_paths: ${{ steps.select.outputs.idf_paths }}
       arduino_paths: ${{ steps.select.outputs.arduino_paths }}
+      docs_only: ${{ steps.select.outputs.docs_only }}
+      firmware_touched: ${{ steps.select.outputs.firmware_touched }}
+      release_review_required: ${{ steps.select.outputs.release_review_required }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -31,6 +34,7 @@ jobs:
         run: |
           python3 -m unittest discover -s tests -p "test_*.py"
           python3 -m py_compile scripts/*.py releases/*.py
+          python3 scripts/check_immutable_artifacts.py . --manifest config/immutable-artifacts.sha256
           python3 -m pip install --disable-pip-version-check --quiet pyyaml
           python3 - <<'PY'
           import pathlib
@@ -47,6 +51,9 @@ jobs:
             echo "selector=all" >> "$GITHUB_OUTPUT"
             echo 'idf_paths=[]' >> "$GITHUB_OUTPUT"
             echo 'arduino_paths=[]' >> "$GITHUB_OUTPUT"
+            echo "docs_only=false" >> "$GITHUB_OUTPUT"
+            echo "firmware_touched=false" >> "$GITHUB_OUTPUT"
+            echo "release_review_required=false" >> "$GITHUB_OUTPUT"
             python3 scripts/audit_markdown.py . --all --config config/markdown-audit.json
             exit 0
           fi
@@ -55,6 +62,9 @@ jobs:
             echo "selector=all" >> "$GITHUB_OUTPUT"
             echo 'idf_paths=[]' >> "$GITHUB_OUTPUT"
             echo 'arduino_paths=[]' >> "$GITHUB_OUTPUT"
+            echo "docs_only=false" >> "$GITHUB_OUTPUT"
+            echo "firmware_touched=false" >> "$GITHUB_OUTPUT"
+            echo "release_review_required=false" >> "$GITHUB_OUTPUT"
             python3 scripts/audit_markdown.py . --all --config config/markdown-audit.json
             exit 0
           fi
@@ -69,6 +79,7 @@ jobs:
             echo "complete base revision is unavailable; refusing to route example builds" >&2
             exit 2
           fi
+          git diff --check $diff_range
           git diff --name-status --find-renames $diff_range > changed-files.txt
           test -s changed-files.txt || { echo "changed-file scope is empty" >&2; exit 2; }
           python3 scripts/audit_markdown.py . --changed-files-from changed-files.txt --config config/markdown-audit.json
@@ -84,6 +95,15 @@ jobs:
               out.write('selector=all\n')
               out.write('idf_paths=' + json.dumps(report['esp_idf']['selected'], separators=(',', ':')) + '\n')
               out.write('arduino_paths=' + json.dumps(report['arduino']['selected'], separators=(',', ':')) + '\n')
+              scope = report['scope']
+              for key in ('docs_only', 'firmware_touched', 'release_review_required'):
+                  out.write(f"{key}={str(scope[key]).lower()}\n")
+          scope = report['scope']
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as summary:
+              summary.write('## Change scope\n\n')
+              summary.write(f"- Documentation only: `{scope['docs_only']}`\n")
+              summary.write(f"- Firmware touched: `{scope['firmware_touched']}`\n")
+              summary.write(f"- Release review required: `{scope['release_review_required']}`\n")
           PY
 
   discover-esp-idf:
@@ -142,7 +162,7 @@ jobs:
           ROUTED: ${{ needs.scope.outputs.routed }}
           SELECTED_PATHS: ${{ needs.scope.outputs.arduino_paths }}
         run: |
-          args=(--surface arduino --selector "${{ needs.scope.outputs.selector }}" --arduino-core 3.3.11 --fqbn esp32:esp32:esp32s3 --github-output "$GITHUB_OUTPUT")
+          args=(--surface arduino --selector "${{ needs.scope.outputs.selector }}" --arduino-core 3.3.11 --fqbn esp32:esp32:esp32s3:FlashMode=qio,FlashSize=16M,PSRAM=opi,USBMode=hwcdc,PartitionScheme=default --github-output "$GITHUB_OUTPUT")
           if [[ "$ROUTED" == "true" ]]; then args+=(--selected-paths "$SELECTED_PATHS"); fi
           python3 scripts/discover_examples.py "${args[@]}"
 

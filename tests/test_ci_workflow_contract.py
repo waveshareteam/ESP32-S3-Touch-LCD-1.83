@@ -24,6 +24,22 @@ class ExamplesWorkflowContractTests(unittest.TestCase):
         self.assertEqual(2, self.workflow.count('echo "selector=all" >> "$GITHUB_OUTPUT"'))
         self.assertIn("--idf-versions v5.5.5,v6.0.2", self.workflow)
         self.assertIn("--arduino-core 3.3.11", self.workflow)
+        self.assertIn(
+            "--fqbn esp32:esp32:esp32s3:FlashMode=qio,FlashSize=16M,PSRAM=opi,USBMode=hwcdc,PartitionScheme=default",
+            self.workflow,
+        )
+
+    def test_scope_checks_use_complete_range_and_publish_routing_flags(self) -> None:
+        self.assertIn("git diff --check $diff_range", self.workflow)
+        self.assertIn(
+            "python3 scripts/check_immutable_artifacts.py . --manifest config/immutable-artifacts.sha256",
+            self.workflow,
+        )
+        for flag in ("docs_only", "firmware_touched", "release_review_required"):
+            self.assertIn(f"{flag}: ${{{{ steps.select.outputs.{flag} }}}}", self.workflow)
+        self.assertIn("for key in ('docs_only', 'firmware_touched', 'release_review_required'):", self.workflow)
+        self.assertIn('out.write(f"{key}=', self.workflow)
+        self.assertIn("GITHUB_STEP_SUMMARY", self.workflow)
 
     def test_cancellation_preserves_manual_and_tag_runs(self) -> None:
         self.assertIn(
