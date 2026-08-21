@@ -79,7 +79,7 @@ Bundled Arduino libraries live under [`examples/arduino/libraries/`](examples/ar
 
 ## 🛠️ Toolchains and CI
 
-CI builds all six ESP-IDF projects with ESP-IDF `v5.5.5` and `v6.0.2`, and all nine Arduino sketches with Arduino-ESP32 `3.3.11` using `esp32:esp32:esp32s3`.
+CI builds all six ESP-IDF projects with ESP-IDF `v5.5.5` and `v6.0.2`, and all nine Arduino sketches with Arduino-ESP32 `3.3.11` using `esp32:esp32:esp32s3:FlashMode=qio,FlashSize=16M,PSRAM=opi,USBMode=hwcdc,PartitionScheme=default`. This matches the ESP32-S3R8 board configuration: 16 MB flash, octal PSRAM, QIO flash mode, and the default partition scheme.
 
 Every pull request receives a lightweight scope and static-check result. Documentation-only changes select no product builds; direct example changes select only the affected project or sketch; shared build inputs select the applicable full matrix. Empty or unavailable diff data fails closed. See [CI documentation](docs/ci.md).
 

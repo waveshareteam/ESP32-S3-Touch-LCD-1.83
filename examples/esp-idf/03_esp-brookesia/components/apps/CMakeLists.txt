@@ -11,6 +11,6 @@ target_compile_options(
     ${COMPONENT_LIB}
     PRIVATE
         -Wno-format
-        -Wno-incompatible-pointer-types
-        -Wno-int-conversion
+        $<$<COMPILE_LANGUAGE:C>:-Wno-incompatible-pointer-types>
+        $<$<COMPILE_LANGUAGE:C>:-Wno-int-conversion>
         -DLV_LVGL_H_INCLUDE_SIMPLE)

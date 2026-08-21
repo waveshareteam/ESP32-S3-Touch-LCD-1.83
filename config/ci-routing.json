@@ -15,9 +15,12 @@
     "tests/**",
     "scripts/audit_ci_routing.py",
     "scripts/audit_markdown.py",
+    "scripts/check_immutable_artifacts.py",
     "scripts/inventory_repo.py",
     "config/ci-routing.json",
+    "config/immutable-artifacts.sha256",
     "config/markdown-audit.json",
+    "tests/test_immutable_artifacts.py",
     "releases/download_artifacts.py",
     "releases/download_artifacts_impl.py"
   ],

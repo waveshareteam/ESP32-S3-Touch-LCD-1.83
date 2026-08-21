@@ -28,7 +28,7 @@ python3 releases/package_firmware.py \
 
 ```bash
 arduino-cli compile \
-  --fqbn esp32:esp32:esp32s3 \
+  --fqbn esp32:esp32:esp32s3:FlashMode=qio,FlashSize=16M,PSRAM=opi,USBMode=hwcdc,PartitionScheme=default \
   --libraries examples/arduino/libraries \
   --export-binaries \
   --output-dir build/01_HelloWorld-3.3.11 \
@@ -60,4 +60,4 @@ python3 releases/download_artifacts.py --clean
 
 使用 `--artifact <name>` 选择单个工件，或使用 `--pattern "firmware-esp-idf-*v6.0.2"` 进行 glob 筛选。辅助工具使用 `GH_TOKEN`、`GITHUB_TOKEN` 或 `gh auth token`。解压后的文件写入已被 Git 忽略的 `releases/downloads/run-<run-id>/`。
 
-[`firmware/`](../firmware/) 中已提交的镜像是独立的不可变交付表面；这些辅助工具不会重新构建或替换它。
+[`firmware/`](../firmware/) 中已提交的镜像是独立的不可变交付表面；这些辅助工具不会重新构建或替换它。经维护者批准的发布改动必须同时更新工件及其不可变清单；普通拉取请求会因哈希检查失败而被阻止。

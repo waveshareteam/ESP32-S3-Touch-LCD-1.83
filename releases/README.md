@@ -28,7 +28,7 @@ Export an Arduino sketch into a stable output directory, then package it:
 
 ```bash
 arduino-cli compile \
-  --fqbn esp32:esp32:esp32s3 \
+  --fqbn esp32:esp32:esp32s3:FlashMode=qio,FlashSize=16M,PSRAM=opi,USBMode=hwcdc,PartitionScheme=default \
   --libraries examples/arduino/libraries \
   --export-binaries \
   --output-dir build/01_HelloWorld-3.3.11 \
@@ -60,4 +60,4 @@ python3 releases/download_artifacts.py --clean
 
 Use `--artifact <name>` for one artifact or `--pattern "firmware-esp-idf-*v6.0.2"` for a glob selection. The helper uses `GH_TOKEN`, `GITHUB_TOKEN`, or `gh auth token`. Extracted files are written below `releases/downloads/run-<run-id>/`, which is ignored by Git.
 
-The checked-in image in [`firmware/`](../firmware/) is a separate immutable delivery surface. These helpers never rebuild or replace it.
+The checked-in image in [`firmware/`](../firmware/) is a separate immutable delivery surface. These helpers never rebuild or replace it. An authorized release change updates the artifact and its immutable manifest together after maintainer approval; ordinary pull requests fail the hash check.

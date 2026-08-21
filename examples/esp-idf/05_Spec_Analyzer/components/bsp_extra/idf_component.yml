@@ -4,5 +4,10 @@ dependencies:
 
   waveshare/esp32_s3_touch_lcd_1_83:
     version: "^2.0.0"
+
+  # Local wrapper directly calls this API; range follows managed BSP 2.x.
+  espressif/esp_codec_dev:
+    version: "~1.5"
+    public: true
 description: Board-specific audio extension for esp32_s3_touch_lcd_1_83
 version: 0.0.2
