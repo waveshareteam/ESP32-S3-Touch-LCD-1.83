@@ -1,7 +1,17 @@
-# 出厂固件
+# 固件
 
-[English](README.md)
+[English](README.md) | [简体中文](README_ZH.md)
 
-此目录包含 ESP32-S3 Touch LCD 1.83 开发板的已发布二进制固件。该镜像用于烧录和恢复，不是源码工程，且不参与默认示例 CI。
+ESP32-S3-Touch-LCD-1.83 的出厂固件。BIN 同时包含出厂演示和小智 AI，是从 `0x0` 烧录的合并镜像，文件名中的日期即版本。
 
-除非维护者明确授权固件发布更新，否则它必须保持逐字节不变。经授权的更新必须同时修改镜像与 `config/immutable-artifacts.sha256`；普通拉取请求会因哈希检查失败而被阻止。其他固件表面的源码和构建说明尚未包含在此处，后续可能会提供。
+| 文件 | 用途 |
+| --- | --- |
+| [ESP32-S3-Touch-LCD-1.83_FactoryOnly_20251024.bin](ESP32-S3-Touch-LCD-1.83_FactoryOnly_20251024.bin) | 出厂演示与小智 AI 组合固件 |
+
+在本目录运行以下命令，将 `<PORT>` 替换为开发板对应的串口。整片擦除会清除已有设置和用户数据。
+
+```bash
+python -m pip install esptool
+esptool.py --chip esp32s3 --port <PORT> erase_flash
+esptool.py --chip esp32s3 --port <PORT> write_flash 0x0 ESP32-S3-Touch-LCD-1.83_FactoryOnly_20251024.bin
+```
